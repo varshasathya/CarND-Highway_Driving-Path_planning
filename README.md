@@ -26,6 +26,10 @@ The highway's waypoints loop around so the frenet s value, distance along the ro
 
 Here is the data provided from the Simulator to the C++ Program
 
+[//]: # (Image References)
+
+[image1]: ./readme_images/output_path_planner.jpg "output_path_planner"
+
 #### Main car's localization Data (No Noise)
 
 ["x"] The car's x position in map coordinates
@@ -140,6 +144,44 @@ that's just a guess.
 One last note here: regardless of the IDE used, every submitted project must
 still be compilable with cmake and make./
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+## Ruberics
+### 1. The code compiles correctly.
+
+The code compiled without any errors.
+
+## 2. The car is able to drive at least 4.32 miles without incident..
+
+ Each incident case is satisfied. There was no red messages.
+
+![alt text][image1]
+
+## 3. Reflection
+
+Path planning consist of prediction, behaviour planning, and trajectory generation.
+
+### Prediction:
+ This deals with what actions other objects might take in the future. 
+ 		Is there a car in front of us blocking the traffic.
+		Is there a car to the right of us making a lane change not safe.
+		Is there a car to the left of us making a lane change not safe.
+ Code in main.cpp - line 103 - 133
+ 
+### Behaviour planning
+The behavioral planning component determines what behavior the vehicle should exhibit at any point in time. 
+		If we have a car in front of us, do we change lanes?
+		Do we speed up or slow down?
+Code in main.cpp - 134 - 147
+
+### Trajectory generation
+Based on the desired immediate behavior, the trajectory planning component will determine which trajectory is best for executing this behavior.
+It strats with finding any previous points.We then keep the refence x,y and yaw points.Checking whether any previous points is almost empty, then we use current car's point to find the previous point and add them to the list.If there is already previous points, then we just add previous two points.
+
+For trajectory generation, we are using spline instead of polynomial trajectory generation as it makes the work less complicated.
+Then we add all previous points to next_x_vals and next_y_vals as it going to be the final control values pass it to the simulator and it will helps to get a smooth transition to the new points that we calculate later. The rest of the points are calculated by evaluating the spline and transforming the output coordinates.
+
+Code in main.cpp - 158 - 251
+
+
+
+
 
